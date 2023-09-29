@@ -26,7 +26,12 @@ console.log(data)
 const userSlice = createSlice({
   name: 'userSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, {payload}) =>{
+      state.name = payload.name;
+      state.email = payload.email;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(createUser.pending, (state) => {
       state.isLoading = true;
@@ -51,5 +56,7 @@ const userSlice = createSlice({
     });
   }
 });
+
+export const { setUser } = userSlice.actions
 
 export default userSlice.reducer;
