@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import auth from '../../utils/firebase.config';
-import { setUser } from '../../redux/features/user/userSlice';
+import { setUser, toggleLoading } from '../../redux/features/user/userSlice';
 
 const PrivateRoute = ({ children }) => {
   const { pathname } = useLocation();
@@ -17,7 +17,12 @@ const PrivateRoute = ({ children }) => {
       if(user){
         dispatch(setUser({
           name: user.displayName,
-        }))
+          email: user.email,
+        })
+        );
+        dispatch(toggleLoading(false))
+      }else{
+        dispatch(toggleLoading(false))
       }
     })
   }, [])
